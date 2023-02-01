@@ -38,7 +38,7 @@ def get_permission_ids_for_user(user_id: int) -> List[int]:
         WHERE u.id = '{user_id}';
     """)
     permission_ids = [row["permission_name"] for row in result]
-    print(permission_ids)
+    #print(permission_ids)
     return permission_ids
 
 def get_user(email: str):
