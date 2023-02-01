@@ -30,6 +30,7 @@ app.add_middleware(
 )
 
 # uvicorn app.main:app --reload
+# pip3 freeze > requirements.txt
 app.include_router(rt_items.router)
 app.include_router(rt_users.router)
 app.include_router(rt_auth.router)

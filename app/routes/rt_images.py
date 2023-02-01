@@ -8,11 +8,12 @@ from app.utils.u_db import query
 from app.utils.u_auth import get_current_user
 from app.utils.u_images import resize_image
 from app.schemas import UserDB
+from app.config import settings
 
 router = APIRouter(prefix="", tags=["images"],)
 
-S3_ACCESS_KEY = 'AKIAWFHZXC654VPEKFXK'
-S3_SECRET_KEY = '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'
+S3_ACCESS_KEY = settings.S3_ACCESS_KEY
+S3_SECRET_KEY = settings.S3_SECRET_KEY
 s3 = boto3.client(
     's3',
     aws_access_key_id=S3_ACCESS_KEY,

@@ -14,16 +14,19 @@ from fastapi_mail import ConnectionConfig, FastMail, MessageSchema, MessageType
 from pydantic import BaseModel, EmailStr
 from starlette.responses import JSONResponse
 
+from app.config import settings
 
 
 class EmailSchema(BaseModel):
     email: List[EmailStr]
 
-
+MAIL_USERNAME = settings.MAIL_USERNAME
+MAIL_PASSWORD = settings.MAIL_PASSWORD
+MAIL_FROM = settings.MAIL_FROM
 conf = ConnectionConfig(
-    MAIL_USERNAME ="juan@asventech.com",
-    MAIL_PASSWORD = "Tuccetino10.",
-    MAIL_FROM = "juan@asventech.com",
+    MAIL_USERNAME = MAIL_USERNAME,
+    MAIL_PASSWORD = MAIL_PASSWORD,
+    MAIL_FROM = MAIL_FROM,
     MAIL_PORT = 465,
     MAIL_SERVER = "smtp.gmail.com",
     MAIL_STARTTLS = False,
