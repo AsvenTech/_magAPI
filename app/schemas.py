@@ -5,11 +5,11 @@ from datetime import datetime
 
 class Item(BaseModel):
     id: Optional[UUID]
-    room: int
-    category: str
+    room_id: UUID
+    category_id:UUID
     weight: int
     description: Optional[str]
-    user_id: UUID
+    found_by_id: UUID
 
 class ItemCreate(BaseModel):
     category_id:UUID

@@ -108,11 +108,13 @@ def delete_item(id: UUID, user: str = Depends(get_current_user)):
     
     #TODO Queries to models
     deleted_item = query(f""" SELECT * FROM items WHERE id = '{id}'""")
-    deleted_item = Item(**deleted_item)
-
+    
     if not deleted_item:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Item with id: {id} does not exist")
-    if deleted_item.user_id != user.id:
+    
+    deleted_item = Item(**deleted_item)
+
+    if deleted_item.found_by_id != user.id:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=f"You are not allowed to perform this cation")
     deleted_item = query(f""" DELETE FROM items WHERE id = '{id}' RETURNING *""")
     return Response(status_code=status.HTTP_204_NO_CONTENT)
