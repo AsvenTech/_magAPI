@@ -11,9 +11,12 @@ router = APIRouter(prefix="/categories", tags=["Categories"],)
 def create_category(category: CategoryCreate, user: UserDB = Depends(get_current_user)):
     
     max_position =  query("""SELECT MAX(position) FROM public.categories""")
+    max_position = max_position['max']
+    if max_position is None:
+        max_position = 0
     new_category = query(f"""INSERT INTO categories 
                         (name, default_weight, icon_url, description, position) 
-                        VALUES ('{category.name}', '{category.default_weight}', '{category.icon_url}','{category.description}',{max_position['max']+1}) RETURNING *""")
+                        VALUES ('{category.name}', '{category.default_weight}', '{category.icon_url}','{category.description}',{max_position+1}) RETURNING *""")
     
     
     return new_category

@@ -37,7 +37,10 @@ def get_permission_ids_for_user(user_id: int) -> List[int]:
         JOIN public.permissions p ON rp.permission_id = p.id
         WHERE u.id = '{user_id}';
     """)
-    permission_ids = [row["permission_name"] for row in result]
+    if isinstance(result, list):
+        permission_ids = [row["permission_name"] for row in result]
+    else:
+        permission_ids = [result["permission_name"]]
     #print(permission_ids)
     return permission_ids
 
