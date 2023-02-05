@@ -29,14 +29,17 @@ class ListedItems(BaseModel):
     room_number: int
     vip: bool
     image_url: str
-    item_weight: int 
+    weight: int 
     found_date: datetime
     category: str
     status: str
 
 class ItemDetail(ListedItems):
     item_description: str
+    room_id: UUID
     found_by: str
+    found_by_id: UUID
+    category_id: UUID
     booking: Optional[str]
     client_id: Optional[UUID]
     client_email: Optional[str]
@@ -47,7 +50,7 @@ class ItemDetail(ListedItems):
 class ItemUpdate(BaseModel):
     image_url: str
     description: Optional[str]
-    weight: Optional[int]
+    weight: int
     room_id: UUID
     category_id:UUID
     found_date:datetime

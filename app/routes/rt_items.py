@@ -81,14 +81,17 @@ def get_items_user(user: UserDB = Depends(get_current_user), filter: str = ''):
 def get_item(id: UUID):
     item = query(f""" SELECT items.id as item_id,
                         rooms.room_number,
+                        items.room_id,
                         rooms.vip,
                         items.image_url,
                         items.description as item_description,
                         items.weight as item_weight,
                         items.found_date,
                         categories.name as category,
+                        items.category_id,
                         item_status.name as status,
                         users.name as found_by,
+                        items.found_by_id,
                         items.client_id as client_id,
                         clients.booking,
                         clients.email as client_email,
@@ -127,10 +130,11 @@ def delete_item(id: UUID, user: str = Depends(get_current_user)):
 @router.put("/{id}")
 def update_item(id: UUID, item: ItemUpdate, user: UserDB = Depends(get_current_user)):
     updated_item = query(f""" SELECT * FROM items WHERE id = '{id}'""")
+    print(item)
     updated_item = Item(**updated_item)
     if not updated_item:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Item with id: {id} does not exist")
-    if updated_item.user_id != user.id:
+    if updated_item.found_by_id != user.id:
         raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=f"You are not allowed to perform this action")
     updated_item = query(f""" UPDATE items SET 
                             image_url = '{item.image_url}', description = '{item.description}', weight = '{item.weight}', room_id = '{item.room_id}', 
