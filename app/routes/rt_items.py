@@ -32,7 +32,7 @@ def get_items(user: UserDB = Depends(get_current_user), filter: str = ''):
                         rooms.room_number,
                         rooms.vip,
                         items.image_url,
-                        items.weight as item_weight,
+                        items.weight,
                         items.found_date,
                         categories.name as category,
                         item_status.name as status
