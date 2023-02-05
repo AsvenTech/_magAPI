@@ -43,8 +43,11 @@ def get_items(user: UserDB = Depends(get_current_user), filter: str = ''):
                     {no_filter}WHERE item_status.name = '{filter}'    
                         """)
     print(filter)
+
     if not items:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No items to show")
+    if isinstance(items, dict):
+        items = [items]
     return items
     
 @router.get("/user/", response_model=List[ListedItems])
@@ -67,9 +70,11 @@ def get_items_user(user: UserDB = Depends(get_current_user), filter: str = ''):
                         LEFT JOIN public.rooms ON rooms.id = items.room_id
                     {no_filter}WHERE status = '{filter}' AND items.found_by_id = '{user.id}'   
                         """)
-    print(filter)
+
     if not items:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No items to show")
+    if isinstance(items, dict):
+        items = [items]
     return items
 
 @router.get("/{id}", response_model=ItemDetail)
