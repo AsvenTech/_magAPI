@@ -13,6 +13,7 @@ class Settings(BaseSettings):
     MAIL_USERNAME: str
     MAIL_PASSWORD: str 
     MAIL_FROM: str
+    SENTRY_DSN: str
 
     class Config:
         env_file = ".env"
