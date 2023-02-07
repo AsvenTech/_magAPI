@@ -1,9 +1,10 @@
-from fastapi import Response, status, HTTPException, APIRouter
+from fastapi import Response, status, HTTPException, APIRouter, Depends
 from typing import List
-from app.schemas import Item, ItemResponse, User, UserForm
+from app.schemas import Item, ItemResponse, User, UserForm, UserDB
 from app.utils.u_db import query
 from app.utils.u_auth import get_password_hash
 from app.utils import u_auth
+from app.utils.u_auth import get_current_user
 
 from uuid import UUID
 
@@ -24,3 +25,7 @@ def get_user(id: UUID):
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No items to show")
     return user
+
+@router.get("/permissions/")
+def get_user_permissions(user: UserDB = Depends(get_current_user)):
+    return user.permissions
