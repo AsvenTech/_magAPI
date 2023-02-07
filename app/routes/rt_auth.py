@@ -65,4 +65,4 @@ def login(credentials: OAuth2PasswordRequestForm = Depends()):
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Could not validate credentials",
         )
     acces_token = create_access_token(data = {"email":user.email, "role_id": str(user.role_id)} )
-    return {"access_token": acces_token, "token_type": "bearer"}
+    return {"access_token": acces_token, "token_type": "bearer", "permissions": user.permissions}
