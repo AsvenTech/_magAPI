@@ -22,7 +22,6 @@ def connect():
             print("Connection failed")
             print("Error: ", error)
             time.sleep(3)
-            break
 
 def query(sql,commit=True):
     conn = connect()
